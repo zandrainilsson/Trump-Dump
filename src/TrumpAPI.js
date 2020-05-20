@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 class TrumpAPI extends Component {
     state = {
         qoute: "",
+        date: "",
     }
 
     callAPI = () => {
@@ -12,7 +13,8 @@ class TrumpAPI extends Component {
             .then(response => {
             // handle success
                 this.setState({
-                    quote: response['data']['value']
+                    quote: response['data']['value'],
+                    date: response['data']['appeared_at'].slice(0,10)
                 })
 
             })
@@ -30,9 +32,14 @@ class TrumpAPI extends Component {
     }
     
     render() {
-        const {quote} = this.state
+        const {quote, date} = this.state
 
-        return <p>{quote}</p>
+        return(
+            <div id="quote">
+                <p>{quote}</p>
+                <p>{date}</p>
+            </div>
+        )
     }
 }
 
