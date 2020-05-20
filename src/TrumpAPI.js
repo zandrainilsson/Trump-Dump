@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import axios from "axios";
 
 class TrumpAPI extends Component {
     state = {
@@ -7,8 +8,6 @@ class TrumpAPI extends Component {
     }
 
     callAPI = () => {
-        const axios = require('axios').default;
-
         axios.get('https://www.tronalddump.io/random/quote')
             .then(response => {
             // handle success
@@ -38,9 +37,17 @@ class TrumpAPI extends Component {
             <div id="quote">
                 <p>{quote}</p>
                 <p>{date}</p>
+                <NewFactButton newFact={this.callAPI} quote={quote}/>
             </div>
         )
     }
+}
+
+const NewFactButton = props => {
+    console.log(props.quote)
+    return(
+        <button id="want-more" onClick={props.newFact}>I want more</button>
+    )
 }
 
 export default TrumpAPI;

@@ -11,3 +11,18 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#want-more {
+  background-color: rgb(218, 40, 40);
+  border: 5px solid rgba(0, 0, 0, 0.123);
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
+  box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.75);
+  cursor: pointer;
+}
