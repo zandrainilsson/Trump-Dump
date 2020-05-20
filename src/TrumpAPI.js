@@ -34,17 +34,18 @@ class TrumpAPI extends Component {
         const {quote, date} = this.state
 
         return(
-            <div id="quote">
-                <p>{quote}</p>
-                <p>{date}</p>
-                <NewFactButton newFact={this.callAPI} quote={quote}/>
+            <div>
+                <div id="quote" className="speech-bubble">
+                    <p>{quote}</p>
+                    <p>{date}</p>
+                </div>
+                <NewFactButton newFact={this.callAPI} />
             </div>
         )
     }
 }
 
 const NewFactButton = props => {
-    console.log(props.quote)
     return(
         <button id="want-more" onClick={props.newFact}>I want more</button>
     )

@@ -23,6 +23,35 @@ code {
   height: 100px;
   width: 100px;
   border-radius: 100%;
-  box-shadow: 5px 5px 0px 0px rgba(0,0,0,0.75);
+  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 0.384);
   cursor: pointer;
+  outline: none;
+}
+
+.speech-bubble {
+  max-width: 50%;
+	position: relative;
+	background: #00aabb;
+  border-radius: .4em;
+  padding: 10px;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 32px solid transparent;
+	border-right-color: #00aabb;
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -16px;
+	margin-left: -32px;
+}
+
+#container {
+  width: 80%;
+  margin: auto;
 }
