@@ -11,7 +11,7 @@ Make sure you have [node.js](https://nodejs.org/en/) and [npm](https://www.npmjs
 2. `$ cd Trump-Dump`
 3. `$ npm install`
 4. `$ npm start`
-5.  The Trump Dump web application should now be running on `[localhost:3000](http://localhost:3000)`.
+5.  The Trump Dump web application should now be running on [localhost:3000](http://localhost:3000).
 
 ## Dependencies
 * [React JS](https://reactjs.org/) - Library used to build the web user interface. 
