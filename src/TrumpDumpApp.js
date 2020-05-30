@@ -27,7 +27,7 @@ export default function TrumpDumpApp() {
             params: {
                 api_key: 'hE1CoGoRCHBeKLfdZoOZIb1YfP32zYKQ',
                 q: "trump",
-                limit: 20,
+                limit: 30,
             }
           });
 
