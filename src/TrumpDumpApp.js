@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTransition, useSpring, animated } from 'react-spring';
 import axios from "axios";
+import flag from "./flag.png";
 
 /** Funktionen som kör hela webbapplikationen */
 export default function TrumpDumpApp() {
@@ -61,10 +62,14 @@ export default function TrumpDumpApp() {
 
     /** Funktion som returnerar en div vilken innehåller en bild med GIF, sparad id 'trumpState' */
     const TrumpGif = () => {
+        const props = useSpring({
+            opacity: 1,
+            from: { opacity: 0 },
+        })
         return (
-            <div id="trump-gif">
+            <animated.div id="trump-gif" style={props}>
                 <img src={trumpState.gif} alt="gif of donald trump"/>
-            </div>
+            </animated.div>
         )
     }
 
@@ -82,7 +87,9 @@ export default function TrumpDumpApp() {
                 <TrumpGif />
                 <TrumpText />
             </main>
-            <NewFactButton apiCall={apiCall}/>
+            <footer>
+                <NewFactButton apiCall={apiCall}/>
+            </footer>
         </div>
     )
 }
@@ -93,7 +100,13 @@ const Welcome = () => {
         opacity: 1,
         from: { opacity: 0 },
     })
-    return <animated.h1 style={props}>Trump Dump</animated.h1>
+    return (
+        <animated.h1 style={props}>
+            <img src={flag} alt="flag" id="left-flag" />
+            Trump Dump
+            <img src={flag} alt="flag" />
+        </animated.h1>
+    )
 }
 
 /** Funktion som returnerar <button> vilken genererar nytt API-anrop */
