@@ -6,10 +6,8 @@ import axios from "axios";
 export default function TrumpDumpApp() {
     const [trumpState, setTrump] = useState({
         quote: "",
-        date: "",
+        gif: "",
     })
-
-    const [trumpGif, setGif] = useState("");
 
     const pages = [
         ({ style }) => <animated.div className="speech-bubble" style={{ ...style, background: 'white' }}>{trumpState.quote}</animated.div>,
@@ -17,24 +15,22 @@ export default function TrumpDumpApp() {
 
     const [index] = useState(0)
 
-    function apiCall() {
-        axios.get('https://www.tronalddump.io/random/quote')
-            .then(response => {
-                let quote = response['data']['value'];
-                let date = response['data']['appeared_at'].slice(0,10);
+    async function apiCall() {
+        let trumpTweet = await axios.get('https://www.tronalddump.io/random/quote');
+        trumpTweet = trumpTweet.data.value;
 
-                setTrump({ quote: quote, date: date }); 
-        });
-
-        axios.get('http://api.giphy.com/v1/gifs/random', {
+        let trumpGif = await axios.get('http://api.giphy.com/v1/gifs/random', {
             params: {
                 api_key: 'hE1CoGoRCHBeKLfdZoOZIb1YfP32zYKQ',
                 tag: "donald trump"
             }
-          })
-          .then(function (response) {
-            setGif("https://media.giphy.com/media/"+response.data.data.id+"/giphy.gif");
           });
+        trumpGif = trumpGif.data.data.id;
+
+        setTrump({
+            quote: trumpTweet,
+            gif: "https://media.giphy.com/media/" + trumpGif + "/giphy.gif",
+        });
     }
     
     const TrumpText = () => {
@@ -55,8 +51,8 @@ export default function TrumpDumpApp() {
 
     const TrumpGif = () => {
         return (
-            <div>
-                <img src={trumpGif} />
+            <div id="trump-gif">
+                <img src={trumpState.gif} />
             </div>
         )
     }
