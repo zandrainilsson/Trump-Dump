@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSpring, animated } from 'react-spring';
+import { useTransition, useSpring, animated } from 'react-spring';
 import axios from "axios";
 
 
@@ -11,8 +11,13 @@ export default function TrumpDumpApp() {
 
     const [trumpGif, setGif] = useState("");
 
-    function apiCall() {
+    const pages = [
+        ({ style }) => <animated.div className="speech-bubble" style={{ ...style, background: 'white' }}>{trumpState.quote}</animated.div>,
+    ]
 
+    const [index] = useState(0)
+
+    function apiCall() {
         axios.get('https://www.tronalddump.io/random/quote')
             .then(response => {
                 let quote = response['data']['value'];
@@ -31,29 +36,47 @@ export default function TrumpDumpApp() {
             setGif("https://media.giphy.com/media/"+response.data.data.id+"/giphy.gif");
           });
     }
+    
+    const TrumpText = () => {
+        const transitions = useTransition(index, p => p, {
+            from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
+            enter: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+            leave: { opacity: 0, transform: 'translate3d(-50%,0,0)' },
+        })
+        return (
+            <div className="simple-trans-main">
+                {transitions.map(({ item, props, key }) => {
+                    const Page = pages[item]
+                    return <Page key={key} style={props} />
+            })}
+            </div>
+        )
+    }
+
+    const TrumpGif = () => {
+        return (
+            <div>
+                <img src={trumpGif} />
+            </div>
+        )
+    }
+
 
     useEffect(() => {
         apiCall();
     }, []);
+
 
     return(
         <div id="container">
             <header>
                 <Welcome/>
             </header>
-
-            <ApiDiv info={trumpState} />
-            <img src={trumpGif} alt="gif of trump" />
-            <NewFactButton newFact={apiCall} />
-        </div>
-    )
-}
-
-const ApiDiv = (props) => {
-    return (
-        <div className="speech-bubble">
-            <p>{props.info.quote}</p>
-            <p>{props.info.date}</p>
+            <main>
+                <TrumpGif />
+                <TrumpText />
+            </main>
+            <NewFactButton apiCall={apiCall}/>
         </div>
     )
 }
@@ -66,8 +89,9 @@ const Welcome = () => {
     return <animated.h1 style={props}>Trump Dump</animated.h1>
 }
 
-const NewFactButton = props => {
+const NewFactButton = (props) => {
     return(
-    <button id="want-more" onClick={props.newFact}>I want more</button>
+        <button id="want-more" onClick={props.apiCall}>I want more</button>
     )
 }
+
